@@ -57,20 +57,67 @@ export default function HomePage() {
                     required
                 />
 
+                {/* Preset buttons */}
+                {/* Preset buttons */}
+                <div className="flex gap-3">
+                    <button
+                        type="button"
+                        onClick={() => setSlotLength(30)}
+                        className={`flex-1 py-3 rounded-lg font-semibold transition-colors ${
+                            slotLength === 30
+                                ? "bg-blue-600 text-white"
+                                : "bg-blue-100 hover:bg-blue-200 text-blue-700"
+                        }`}
+                    >
+                        30 minutes
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setSlotLength(60)}
+                        className={`flex-1 py-3 rounded-lg font-semibold transition-colors ${
+                            slotLength === 60
+                                ? "bg-blue-600 text-white"
+                                : "bg-blue-100 hover:bg-blue-200 text-blue-700"
+                        }`}
+                    >
+                        60 minutes
+                    </button>
+                </div>
+
+                {/* Custom slot length (independent of buttons) */}
+                {/* Custom slot length */}
                 <input
                     type="number"
-                    placeholder="Slot length (minutes)"
+                    placeholder="Custom slot length (minutes)"
                     value={slotLength}
-                    onChange={(e) => setSlotLength(Number(e.target.value))}
+                    min={5}
+                    max={480}
+                    step={5}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        // Allow only numbers up to 3 digits
+                        if (/^\d{0,3}$/.test(val)) {
+                            setSlotLength(Number(val));
+                        }
+                    }}
                     className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-                    required
                 />
 
+                {/* Weeks input */}
                 <input
                     type="number"
                     placeholder="Weeks to search"
                     value={weeks}
-                    onChange={(e) => setWeeks(Number(e.target.value))}
+                    min={1}
+                    max={4}
+                    step={1}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^\d{0,1}$/.test(val)) {
+                            // only allow 1 digit
+                            setWeeks(Number(val));
+                        }
+                    }}
                     className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
                     required
                 />
